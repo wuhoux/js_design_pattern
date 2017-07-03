@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>document</title>
+</head>
+<body>
+<script>
+/*作者:里擦擦
+ *时间:2017/7/3
+ *实现代理模式，在对象执行之前
+ *尤其代理对象代为执行实现深入的交互功能
+ */
+ var Flower = function (type, price) {
+   this.type = type;
+   this.price = price;
+ }
+ Flower.prototype.buy = function () {
+   console.log("您购买了什么花" + this.type + "请支付多少钱" + this.price + "元");
+ }
+ var flower = new Flower("rose",99);
+ flower.buy();
+ var lcf = {
+   name: "里擦擦",
+   age: 21,
+   city: "宜春",
+   sendFlower: function (target) {
+     target.receiveFlower();
+   }
+ }
+ var pty = {
+   name: "zz",
+   age: 20,
+   receiveFlower:function () {
+     console.log("收到了花");
+   },
+   listenGoodMood: function (fn) {
+     console.log("心情不好");
+   setTimeout(function () {
+     console.log("心情好了,改约的约");
+       fn();
+     },5000)
+   }
+ }
+var xiaohong = {
+  name: "小红",
+  nickname: "送花使者",
+  //接口
+  receiveFlower: function () {
+    pty.listenGoodMood(function () {
+      pty.receiveFlower();
+    });
+  }
+}
+lcf.sendFlower(xiaohong);
+</script>
+</body>
